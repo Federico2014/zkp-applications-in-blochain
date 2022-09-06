@@ -1,6 +1,7 @@
-# The Rust Fuzzing Book
+# ZKP applications in blockchain Book
 
-[**Read the Rust Fuzzing Book online here!**](https://rust-fuzz.github.io/book/)
+[**Read the zkp-applications-in-blochain Book online here!**](https://Federico2014.github.io/zkp-applications-in-blochain
+/)
 
 ## Building
 
