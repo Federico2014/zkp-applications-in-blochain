@@ -3,10 +3,10 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Tutorial - Rust Fuzz Book</title>
+        <title>... - Zero-knowledge applications in Blockchain</title>
         <!-- Custom HTML head -->
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-        <meta name="description" content="Guide on how to fuzz test software written in the Rust programming language">
+        <meta name="description" content="An overall introduction of zero-knowledge proof protocols and application in blockchain">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
@@ -75,7 +75,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="../cargo-fuzz.html"><strong aria-hidden="true">1.</strong> Fuzzing with cargo-fuzz</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../cargo-fuzz/setup.html"><strong aria-hidden="true">1.1.</strong> Setup</a></li><li class="chapter-item expanded "><a href="../cargo-fuzz/tutorial.html"><strong aria-hidden="true">1.2.</strong> Tutorial</a></li><li class="chapter-item expanded "><a href="../cargo-fuzz/guide.html"><strong aria-hidden="true">1.3.</strong> Guide</a></li><li class="chapter-item expanded "><a href="../cargo-fuzz/structure-aware-fuzzing.html"><strong aria-hidden="true">1.4.</strong> Structure-Aware Fuzzing</a></li><li class="chapter-item expanded "><a href="../cargo-fuzz/coverage.html"><strong aria-hidden="true">1.5.</strong> Coverage</a></li><li class="chapter-item expanded "><a href="../cargo-fuzz/targets.html"><strong aria-hidden="true">1.6.</strong> Targets</a></li></ol></li><li class="chapter-item expanded "><a href="../afl.html"><strong aria-hidden="true">2.</strong> Fuzzing with afl.rs</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../afl/setup.html"><strong aria-hidden="true">2.1.</strong> Setup</a></li><li class="chapter-item expanded "><a href="../afl/tutorial.html" class="active"><strong aria-hidden="true">2.2.</strong> Tutorial</a></li></ol></li><li class="chapter-item expanded "><a href="../trophy-case.html"><strong aria-hidden="true">3.</strong> Trophy case</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="../introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">Preliminaries</li><li class="chapter-item expanded "><a href="../finite-fields.html"><strong aria-hidden="true">2.</strong> Finite fields</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../finite-fields/group.html" class="active"><strong aria-hidden="true">2.1.</strong> Group</a></li></ol></li><li class="chapter-item expanded "><a href="../fft.html"><strong aria-hidden="true">3.</strong> FFT</a></li><li class="chapter-item expanded "><a href="../rescue-hash.html"><strong aria-hidden="true">4.</strong> Rescue hash</a></li><li class="chapter-item expanded affix "><li class="part-title">ZKP protocol</li><li class="chapter-item expanded "><a href="../finite-fields.html"><strong aria-hidden="true">5.</strong> zk-SNARK</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../finite-fields/group.html" class="active"><strong aria-hidden="true">5.1.</strong> Groth16</a></li></ol></li><li class="chapter-item expanded "><a href="../fft.html"><strong aria-hidden="true">6.</strong> Bullet-proofs</a></li><li class="chapter-item expanded "><a href="../rescue-hash.html"><strong aria-hidden="true">7.</strong> zk-STARK</a></li><li class="chapter-item expanded affix "><li class="part-title">Privacy protection</li><li class="chapter-item expanded "><a href="../finite-fields.html"><strong aria-hidden="true">8.</strong> Blockchain</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../finite-fields/group.html" class="active"><strong aria-hidden="true">8.1.</strong> Zcash</a></li><li class="chapter-item expanded "><a href="../finite-fields/group.html" class="active"><strong aria-hidden="true">8.2.</strong> Anoma</a></li></ol></li><li class="chapter-item expanded "><a href="../fft.html"><strong aria-hidden="true">9.</strong> Contracts</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../rescue-hash.html"><strong aria-hidden="true">9.1.</strong> Tornado cash</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">Scalability</li><li class="chapter-item expanded "><a href="../finite-fields.html"><strong aria-hidden="true">10.</strong> L1</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../finite-fields/group.html" class="active"><strong aria-hidden="true">10.1.</strong> Mina</a></li><li class="chapter-item expanded "><a href="../finite-fields/group.html" class="active"><strong aria-hidden="true">10.2.</strong> ...</a></li></ol></li><li class="chapter-item expanded "><a href="../fft.html"><strong aria-hidden="true">11.</strong> L2</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../rescue-hash.html"><strong aria-hidden="true">11.1.</strong> zkSync</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -104,7 +104,7 @@
                         </button>
                     </div>
 
-                    <h1 class="menu-title">Rust Fuzz Book</h1>
+                    <h1 class="menu-title">Zero-knowledge applications in Blockchain</h1>
 
                     <div class="right-buttons">
                         <a href="../print.html" title="Print this book" aria-label="Print this book">
@@ -134,75 +134,16 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="tutorial"><a class="header" href="#tutorial">Tutorial</a></h1>
-<p>For this tutorial, we are going to fuzz the URL parser <a href="https://github.com/servo/rust-url">rust-url</a>. Our goal here is to find some input generated by the fuzzer such that, when passed to <a href="https://docs.rs/url/*/url/struct.Url.html#method.parse"><code>Url::parse</code></a>, it causes some sort of panic or crash to happen.</p>
-<h2 id="create-a-fuzz-target"><a class="header" href="#create-a-fuzz-target">Create a fuzz target</a></h2>
-<p>The first thing we’ll do is create a <em>fuzz target</em> in the form of a Rust binary crate. AFL will call the resulting binary, supplying generated bytes to standard input that we’ll pass to <code>Url::parse</code>.</p>
-<pre><code class="language-sh">cargo new --bin url-fuzz-target
-cd url-fuzz-target
-</code></pre>
-<p>We’ll need two dependencies in this crate:</p>
-<ul>
-<li><code>url</code>: the crate we’re fuzzing</li>
-<li><code>afl</code>: not required, but includes a couple utility functions to assist in creating fuzz targets</li>
-</ul>
-<p>So add these to the <code>Cargo.toml</code> file:</p>
-<pre><code class="language-toml">[dependencies]
-afl = &quot;*&quot;
-url = &quot;*&quot;
-</code></pre>
-<p>Now we’ll need to write the source for the fuzz target in <code>src/main.rs</code>:</p>
-<pre><code class="language-rust ignore">#[macro_use]
-extern crate afl;
-extern crate url;
-
-fn main() {
-    fuzz!(|data: &amp;[u8]| {
-        if let Ok(s) = std::str::from_utf8(data) {
-            let _ = url::Url::parse(&amp;s);
-        }
-    });
-}
-</code></pre>
-<p><a href="https://docs.rs/afl/*/afl/macro.fuzz.html"><code>fuzz!</code></a> is a utility macro provided by the <code>afl</code> crate that reads bytes from standard input and
-passes the bytes to the provided closure.</p>
-<p>In the body of the closure, we call <code>Url::parse</code> with the bytes that AFL generated. If all goes well, <code>url::Url::parse</code> will return an <code>Ok</code> containing a valid <code>Url</code>, or an <code>Err</code> indicating a <code>Url</code> could not be constructed from the <code>String</code>. If <code>Url::parse</code> panics while parsing the <code>String</code>, AFL will treat it as a crash and the AFL UI will indicate as such.</p>
-<p>One important detail about the <a href="https://docs.rs/afl/*/afl/macro.fuzz.html"><code>fuzz!</code></a> macro: if a panic occurs within the body of the closure, the panic will be <a href="https://doc.rust-lang.org/std/panic/fn.catch_unwind.html">caught</a> and <a href="https://doc.rust-lang.org/std/process/fn.abort.html"><code>process::abort</code></a> will be subsequently called. Without the call to <a href="https://doc.rust-lang.org/std/process/fn.abort.html"><code>process::abort</code></a>, AFL would not consider the unwinding panic to be a crash.</p>
-<h2 id="build-the-fuzz-target"><a class="header" href="#build-the-fuzz-target">Build the fuzz target</a></h2>
-<p>Normally, one uses <code>cargo build</code> to compile a Cargo-based Rust project. To get AFL to work with Rust, a few extra compiler flags need to be passed to rustc during the build process. To make this easier, there is an AFL cargo subcommand (provided by the <code>afl</code> crate) that automatically passes these rustc flags for us. To use it, you’ll do something like:</p>
-<pre><code class="language-sh">cargo afl &lt;cargo command&gt;
-</code></pre>
-<p>Since we want to build this crate, we’ll run:</p>
-<pre><code class="language-sh">cargo afl build
-</code></pre>
-<h2 id="provide-starting-inputs"><a class="header" href="#provide-starting-inputs">Provide starting inputs</a></h2>
-<p>AFL doesn't strictly require starting inputs, but providing some can make AFL’s job easier since it won’t need to ‘learn’ what a valid URL looks like. To do this, we'll create a directory called <code>in</code> with a few files (filenames don’t matter) containing valid URLs:</p>
-<pre><code class="language-sh">mkdir in
-echo &quot;tcp://example.com/&quot; &gt; in/url
-echo &quot;ssh://192.168.1.1&quot; &gt; in/url2
-echo &quot;http://www.example.com:80/foo?hi=bar&quot; &gt; in/url3
-</code></pre>
-<h2 id="start-fuzzing"><a class="header" href="#start-fuzzing">Start fuzzing</a></h2>
-<p>To begin fuzzing, we’ll run:</p>
-<pre><code class="language-sh">cargo afl fuzz -i in -o out target/debug/url-fuzz-target
-</code></pre>
-<p>The <code>fuzz</code> subcommand of <code>cargo-afl</code> is the primary interface for fuzzing Rust code with AFL. For those already familiar with AFL, the <code>fuzz</code> subcommand of <code>cargo-afl</code> is identical to running <code>afl-fuzz</code>.</p>
-<p>The <code>-i</code> flag specifies a directory full of input files AFL will use as seeds.</p>
-<p>The <code>-o</code> flag specifies a directory AFL will write all its state and results to.</p>
-<p>The last argument <code>target/debug/url-fuzz-target</code> specifies the fuzz target binary AFL will call, supplying random bytes to standard input.</p>
-<p>As soon as you run this command, you should see AFL’s interface start up:</p>
-<p><img src="https://raw.githubusercontent.com/rust-fuzz/afl.rs/master/etc/screencap.gif" alt="" /></p>
-<p>For more information about this UI and what each of the sections mean, see <a href="http://lcamtuf.coredump.cx/afl/status_screen.txt">this resource hosted on the AFL website</a>.</p>
-<p>AFL will run indefinitely, so if you want to quit, press <code>CTRL-C</code>.</p>
+                        <h1 id=""><a class="header" href="#">...</a></h1>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../afl/setup.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../finite-fields.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                            <a rel="next" href="../trophy-case.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../fft.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         <div style="clear: both"></div>
@@ -211,10 +152,10 @@ echo &quot;http://www.example.com:80/foo?hi=bar&quot; &gt; in/url3
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../afl/setup.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../finite-fields.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                    <a rel="next" href="../trophy-case.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="../fft.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
