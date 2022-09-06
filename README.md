@@ -1,7 +1,6 @@
 # ZKP applications in blockchain Book
 
-[**Read the zkp-applications-in-blochain Book online here!**](https://Federico2014.github.io/zkp-applications-in-blochain
-/)
+[**Read the zkp-applications-in-blochain Book online here!**](https://Federico2014.github.io/zkp-applications-in-blochain/)
 
 ## Building
 
